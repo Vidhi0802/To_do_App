@@ -1,4 +1,4 @@
-import { KeyboardAvoidingView, View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { KeyboardAvoidingView, View, Text, StyleSheet, TouchableOpacity, Keyboard } from 'react-native'
 import React, {useState} from 'react'
 import Title from '../Components/title'
 import TaskTitle from '../Components/TaskTitle'
@@ -10,9 +10,19 @@ import { TextInput } from 'react-native'
 
 const To_do = () => {
   const [task, setTask]=useState();
+  const [taskItems, setTaskItems] = useState([]);
   
   const handleAddTask = () => {
-    console.log(task);
+    Keyboard.dismiss();
+    // console.log(task);
+    setTaskItems([...taskItems, task])
+    setTask(null)
+  }
+
+  const completeTask = (index) => {
+    let itemsCopy = [...taskItems]
+    itemsCopy.splice(index, 1)
+    setTaskItems(itemsCopy)
   }
   
   return (
@@ -22,11 +32,20 @@ const To_do = () => {
       <TaskTitle/>
       <Avatar/>
       <TaskList/>
-      <Tasks text={'Task 1'}/>
-      <Tasks text={'Task 2'} />
+      {
+        taskItems.map((item, index) => {
+          return( 
+            <TouchableOpacity key={index} onPress={() => completeTask(index)}>
+            <Tasks text={item} />
+          </TouchableOpacity>
+          )          
+        })
+      }
+      {/* <Tasks text={'Task 1'}/>
+      <Tasks text={'Task 2'} /> */}
       <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.writeTaskWrapper}>
       <TextInput style={styles.input} placeholder={'Write a task'} value={task} onChangeText={text => setTask(text)}/>
-      <TouchableOpacity onPress={() => handleAddTask}>
+      <TouchableOpacity onPress={() => handleAddTask()}>
         <View style={styles.addTask}>
           <Text style={styles.Plus}>+</Text>
         </View>
