@@ -5,7 +5,7 @@ const TaskList = () => {
   return (
     <View>
       <View style={styles.TaskListContainer}>
-        <Text style={styles.TaskList}>TaskList                                                                           🗑️ </Text>
+        <Text style={styles.TaskList}>TaskList                                                                         🗑️ </Text>
       </View>
     </View>
   )
