@@ -14,7 +14,6 @@ const To_do = () => {
   
   const handleAddTask = () => {
     Keyboard.dismiss();
-    // console.log(task);
     setTaskItems([...taskItems, task])
     setTask(null)
   }
